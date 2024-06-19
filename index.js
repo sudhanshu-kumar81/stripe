@@ -2,12 +2,16 @@
 // Watch this video to get started: https://youtu.be/rPR2aJ6XnAc.
 import express from 'express';
 import Stripe from 'stripe';
-
+import dotenv from 'dotenv'
+dotenv.config({path:'./.env'})
+const PORT=process.env.PORT
 const app = express();
 
 // Initialize Stripe with your secret key
 const stripe = new Stripe('sk_test_51PPfQMP8WnHYzfx7WST3hqTMUaNasCqM8KzEJvyqp7e4fblnhJndYuxz2Az9QkVRePAWkXmmY8W5cf0PaA5g0vdz00PQJ83N0E');
-
+ app.get('/data',(req,res)=>{
+    res.send({data:"hello ji from backend"})
+ })
 app.post('/create-checkout-session', async (req, res) => {
   try {
     const session = await stripe.checkout.sessions.create({
@@ -34,7 +38,7 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log(`Listening on port ${3000}!`));
+app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
 
 
 
