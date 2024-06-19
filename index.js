@@ -49,21 +49,22 @@ app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
 // If you are using Express v4 - v4.16 you need to use body-parser, not express, to retrieve the request body
 app.post('/webhook', express.json({type: 'application/json'}), (request, response) => {
   console.log("arrived in webhhoks")
+  console.log("REQ.BODY Is ",request.body)
   const event = request.body;
 
   // Handle the event
   switch (event.type) {
     case 'payment_intent.succeeded':
-      const paymentIntent = event.data.object;
+      const paymentIntentSucced = event.data.object;
       // Then define and call a method to handle the successful payment intent.
-      handlePaymentIntentSucceeded(paymentIntent);
+      HandlepaymentIntentSucced(paymentIntentSucced);
       break;
-    case 'payment_method.attached':
-      const paymentMethod = event.data.object;
+      case 'payment_intent.payment_failed':
+      const paymentIntentFailed = event.data.object;
       // Then define and call a method to handle the successful attachment of a PaymentMethod.
-      handlePaymentMethodAttached(paymentMethod);
+      HandlepaymentIntentFailed(paymentIntentFailed);
       break;
-    // ... handle other event types
+    // ... handle other event types//
     default:
       console.log(`Unhandled event type ${event.type}`);
   }
@@ -74,9 +75,9 @@ app.post('/webhook', express.json({type: 'application/json'}), (request, respons
 
 
 
-const handlePaymentIntentSucceeded=(paymentIntent)=>{
-    console.log("paymentIntent is ",paymentIntent);
+const HandlepaymentIntentSucced=(paymentIntentSucced)=>{
+    console.log("paymentIntent is ",paymentIntentSucced);
 }
-const handlePaymentMethodAttached=(paymentMethod)=>{
-    console.log("paymentMethod is ",paymentMethod)
+const HandlepaymentIntentFailed=(paymentIntentFailed)=>{
+    console.log("paymentMethod is ",paymentIntentFailed)
 }
