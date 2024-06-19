@@ -14,6 +14,7 @@ const stripe = new Stripe('sk_test_51PPfQMP8WnHYzfx7WST3hqTMUaNasCqM8KzEJvyqp7e4
  })
 app.post('/create-checkout-session', async (req, res) => {
   try {
+    console.log("arrived in create checkout")
     const session = await stripe.checkout.sessions.create({
       line_items: [
         {
@@ -47,6 +48,7 @@ app.listen(PORT, () => console.log(`Listening on port ${PORT}!`));
 // Match the raw body to content type application/json
 // If you are using Express v4 - v4.16 you need to use body-parser, not express, to retrieve the request body
 app.post('/webhook', express.json({type: 'application/json'}), (request, response) => {
+  console.log("arrived in webhhoks")
   const event = request.body;
 
   // Handle the event
